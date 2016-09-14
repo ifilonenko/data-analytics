@@ -29,6 +29,12 @@
     <jfreechart.version>1.0.19</jfreechart.version>
 
   </properties>
+  <repositories>
+    <repository>
+      <id>bintray.com</id>
+      <url>https://dl.bintray.com/spark-jobserver/maven</url>
+    </repository>
+  </repositories>
   <dependencies>
     <dependency>
       <groupId>org.nd4j</groupId>
@@ -225,6 +231,30 @@
       <groupId>io.spray</groupId>
       <artifactId>spray-json_2.10</artifactId>
       <version>1.2.6</version>
+    </dependency>
+    <dependency>
+      <groupId>spark.jobserver</groupId>
+      <artifactId>job-server-api_${scala.compat.version}</artifactId>
+      <version>0.6.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>spark.jobserver</groupId>
+      <artifactId>job-server-extras_${scala.compat.version}</artifactId>
+      <version>0.6.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>spark.jobserver</groupId>
+      <artifactId>akka-app_${scala.compat.version}</artifactId>
+      <version>0.6.2</version>
+      <scope>provided</scope>
+    </dependency>
+    <dependency>
+      <groupId>spark.jobserver</groupId>
+      <artifactId>job-server_${scala.compat.version}</artifactId>
+      <version>0.6.2</version>
+      <scope>provided</scope>
     </dependency>
     <!-- Test -->
   </dependencies>
