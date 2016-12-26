@@ -1,0 +1,15 @@
+0	0.03163	film tv comedy music arts games 
+1	0.0239	music comedy 
+2	0.02633	arts literature performing visual comedy design music food beauty fashion 
+3	0.01698	technology news tech podcasting gadgets software business education educational politics 
+4	0.02738	news politics organizations government profit national comedy business local regional education 
+5	0.0152	culture society journals personal comedy health sexuality arts philosophy history 
+6	0.01525	spirituality religion christianity health buddhism islam judaism hinduism education 
+7	0.0268	recreation sports professional outdoor amateur comedy school high college 
+8	0.01155	health nutrition fitness alternative sexuality fashion beauty arts food 
+9	0.01701	games hobbies video comedy technology automotive gadgets aviation podcasting 
+10	0.02676	business marketing management careers education investing training health news technology podcasting higher shopping software 
+11	0.01063	education travel places courses language higher training society 
+12	0.01139	family kids education health training comedy sexuality 
+13	0.0366	society culture history philosophy comedy arts education music literature technology food 
+14	0.01363	medicine science sciences natural education social health higher technology sexuality training 
