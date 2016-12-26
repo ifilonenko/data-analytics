@@ -1,3 +1,64 @@
+# Setting up Apache Ambari on EC2
+
+This guide describes to to manually setup Ambari on EC2 for the purpose of setting up a custom Hadoop environment using HDP (Hortonworks' build packages)
+
+Used this video for walkthrough: [here](https://www.youtube.com/watch?v=6-RY4Ll6ABU)
+
+Steps:
+
+## Create 1 m4.large instance for Ambari Head
+* Redhat enterprise
+* Protect against accidental termination
+* Add 100GB magnetic storage (delete on termination)
+* Create a new security group with all in/out ports open from any IP
+* Create or use appdev pemfile
+
+## Setup base image
+* SSH as ec2-user to public ip address (ssh -i ec2-user@54.....)
+* Format 100GB drive (sudo mkfs -t ext4 /dev/xvdb)
+* Mount the drive (sudo mkdir /grid && sudo mount /dev/xvdb /grid)
+* Add info to /etc/fstab to be pernament mount
+  * (/dev/xvdb /grid /ext4 defaults.nofail 0 2)
+* Reboot and reconnect
+* Disable SELinux (set SELINUX in /etc/sysconfig/selinux to disabled)
+* Disable firewall (I DID NOT DO THIS FOR CUAPPDEV CLUSTER)
+  * sudo systemctl disable firewalld
+  * sudo service firewalld stop
+* Install ntp (sudo yum install ntp)
+* Start ntpd (sudo systemtctl enable ntpd && sudo systemctl start ntpd)
+* Generate ssh key for connecting between machines (ssh-keygen -t rsa)
+* Add new key to authorized_keys (cat .ssh/id_rsa.pub >> .ssh/authorized_keys)
+  * This is for connecting between the clusters easily
+* Go to AWS dashboard and create image based on this instance
+
+## Spinning up other machines
+* Go into AWS Console and create new instances
+  * Same m4.large size as ambari instance
+* Under configure instance Add the following lines:
+  * sudo mkdir /grid
+  * sudo mkfs -t ext4 /dev/xdvb
+  * sudo mount /dev/xdvb /grid
+* Once created, add the list of hosts to all machines (/etc/hosts)
+
+## Install Ambari
+* Connect to the Ambari Machine
+* Install wget (sudo yum install wget)
+* Add the hdfp ambari repo ()
+* Update yum (sudo yum repolist)
+* Install ambari server (sudo yum install ambari-server)
+* Setup ambari-server (sudo ambari-server setup)
+  * Use defaults (No custom user account, java8, accept agreement, no advanced db config)
+* Start ambari-server (sudo ambari-server start)
+
+## Create Cluster
+* Connect through browser to ambari at :8080
+* Name the cluster
+* Select HDP2.4 (HDP version 2.4)
+  * Under Advanced Options unselect all repos that arent rhel7
+* For target hosts, copy the privateDNS addresses for all machines
+* For SHH key, paste in the id_rsa file that was generated
+* User is ec2-user
+
 # Setting up a DC/OS cluster
 
 This guide describes how to manually setup a DC/OS cluster on AWS machines.
