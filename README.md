@@ -10,48 +10,110 @@ Steps:
 * Redhat enterprise
 * Protect against accidental termination
 * Add 100GB magnetic storage (delete on termination)
-* Create a new security group with all in/out ports open from any IP
+* Use security group called Ambari Cluster (this security group should be same as [here](https://community.hortonworks.com/questions/10728/ambari-fails-to-register.html))
 * Create or use appdev pemfile
 
 ## Setup base image
-* SSH as ec2-user to public ip address (ssh -i ec2-user@54.....)
-* Format 100GB drive (sudo mkfs -t ext4 /dev/xvdb)
-* Mount the drive (sudo mkdir /grid && sudo mount /dev/xvdb /grid)
+* SSH as ec2-user to public ip address
+```bash
+ssh -i ec2-user@[master_public_ip]
+```
+* Format 100GB drive
+```bash
+sudo mkfs -t ext4 /dev/xvdb
+```
+* Mount the drive
+```bash
+sudo mkdir /grid && sudo mount /dev/xvdb /grid
+```
 * Add info to /etc/fstab to be pernament mount
-  * (/dev/xvdb /grid /ext4 defaults.nofail 0 2)
+```bash
+/dev/xvdb /grid ext4 defaults,nofail 0 2
+```
 * Reboot and reconnect
-* Disable SELinux (set SELINUX in /etc/sysconfig/selinux to disabled)
-* Disable firewall (I DID NOT DO THIS FOR CUAPPDEV CLUSTER)
-  * sudo systemctl disable firewalld
-  * sudo service firewalld stop
-* Install ntp (sudo yum install ntp)
-* Start ntpd (sudo systemtctl enable ntpd && sudo systemctl start ntpd)
-* Generate ssh key for connecting between machines (ssh-keygen -t rsa)
-* Add new key to authorized_keys (cat .ssh/id_rsa.pub >> .ssh/authorized_keys)
+* Disable SELinux
+	* in /etc/sysconfig/selinux
+```bash
+SELINUX=disabled
+```
+* Install and disable firewall
+```bash
+sudo yum install firewalld
+sudo systemctl disable firewalld
+sudo service firewalld stop
+```
+* Install ntp
+```bash
+sudo yum install ntp
+```
+* Start ntpd
+```bash
+sudo systemctl enable ntpd
+sudo systemctl start ntpd
+```
+* Generate ssh key for connecting between machines
+```bash
+ssh-keygen -t rsa
+```
+* Add new key to authorized_keys
   * This is for connecting between the clusters easily
+  ```bash
+  cat .ssh/id_rsa.pub >> .ssh/authorized_keys
+  ```
 * Go to AWS dashboard and create image based on this instance
 
 ## Spinning up other machines
 * Go into AWS Console and create new instances
   * Same m4.large size as ambari instance
-* Under configure instance Add the following lines:
-  * sudo mkdir /grid
-  * sudo mkfs -t ext4 /dev/xdvb
-  * sudo mount /dev/xdvb /grid
+* Under configure instance Add the following lines "as text":
+```bash
+sudo mkdir /grid
+sudo mkfs -t ext4 /dev/xdvb
+sudo mount /dev/xdvb /grid
+```
 * Once created, add the list of hosts to all machines (/etc/hosts)
 
 ## Install Ambari
 * Connect to the Ambari Machine
-* Install wget (sudo yum install wget)
-* Add the hdfp ambari repo ()
-* Update yum (sudo yum repolist)
-* Install ambari server (sudo yum install ambari-server)
-* Setup ambari-server (sudo ambari-server setup)
+* Install wget
+```bash
+sudo yum install wget
+```
+* Add the hdfp ambari repo 
+```bash
+sudo wget -nv http://public-repo-1.hortonworks.com/ambari/centos7/2.x/updates/2.4.0.1/ambari.repo -O /etc/yum.repos.d/ambari.repo
+```
+* Update yum
+```bash
+sudo yum repolist
+```
+* Install ambari server 
+```bash
+sudo yum install ambari-server
+```
+* Setup ambari-server
+```bash
+sudo ambari-server setup
+```
   * Use defaults (No custom user account, java8, accept agreement, no advanced db config)
-* Start ambari-server (sudo ambari-server start)
+* Start ambari-server
+```bash
+sudo ambari-server start
+```
+* SOLVING KNOWN ISSUES:
+  * [known issues](https://docs.hortonworks.com/HDPDocuments/Ambari-2.1.0.0/bk_releasenotes_ambari_2.1.0.0/content/ambari_relnotes-2.1.0.0-known-issues.html)
+  * For each host:
+  ```bash
+  sudo yum install ntp
+  sudo systemctl enable ntpd
+  sudo systemctl start ntpd
+  sudo yum remove snappy
+  sudo yum install snappy-devel
+  ```
 
 ## Create Cluster
-* Connect through browser to ambari at :8080
+* Connect through browser to ambari at public_url:8080
+* Username: admin Password: admin
 * Name the cluster
 * Select HDP2.4 (HDP version 2.4)
   * Under Advanced Options unselect all repos that arent rhel7
