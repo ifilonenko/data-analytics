@@ -1,3 +1,7 @@
+# Table of Contents
+## DEVOPS
+### [Ambari Setup on EC2](https://github.com/ifilonenko/data-analytics#setting-up-apache-ambari-on-ec2)
+### [DC/OS Setup on EC2](https://github.com/ifilonenko/data-analytics#setting-up-a-dcos-cluster)
 # Setting up Apache Ambari on EC2
 
 This guide describes to to manually setup Ambari on EC2 for the purpose of setting up a custom Hadoop environment using HDP (Hortonworks' build packages)
@@ -17,6 +21,10 @@ Steps:
 * SSH as ec2-user to public ip address
 ```bash
 ssh -i ec2-user@[master_public_ip]
+```
+* Check location
+```bash
+lsblk
 ```
 * Format 100GB drive
 ```bash
@@ -51,9 +59,23 @@ sudo yum install ntp
 sudo systemctl enable ntpd
 sudo systemctl start ntpd
 ```
+* Check umask
+```bash
+umask
+```
+  * If umask is 0002 edit (/etc/profile) to have umask be just 0022 (remove if statement clause)
 * Generate ssh key for connecting between machines
 ```bash
 ssh-keygen -t rsa
+```
+* Reboot 
+```bash
+sudo reboot
+ssh -i ec2-user@[master_public_ip]
+```
+* Ensure that umask is 0022
+```bash
+umask
 ```
 * Add new key to authorized_keys
   * This is for connecting between the clusters easily
