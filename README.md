@@ -1,21 +1,21 @@
-# Table of Contents
+## Table of Contents
 ## DEVOPS
 ### [Ambari Setup on EC2](https://github.com/ifilonenko/data-analytics#setting-up-apache-ambari-on-ec2)
 ### [DC/OS Setup on EC2](https://github.com/ifilonenko/data-analytics#setting-up-a-dcos-cluster)
-#### Setting up Apache Ambari on EC2
+## Setting up Apache Ambari on EC2
 
 This guide describes to to manually setup Ambari on EC2 for the purpose of setting up a custom Hadoop environment using HDP (Hortonworks' build packages)
 
 Used this video for walkthrough: [here](https://www.youtube.com/watch?v=6-RY4Ll6ABU)
 
-##### Create 1 m4.large instance for Ambari Head
+### Create 1 m4.large instance for Ambari Head
 * Redhat enterprise
 * Protect against accidental termination
 * Add 100GB magnetic storage (delete on termination)
 * Use security group called Ambari Cluster (this security group should be same as [here](https://community.hortonworks.com/questions/10728/ambari-fails-to-register.html))
 * Create or use appdev pemfile
 
-##### Setup base image
+### Setup base image
 * SSH as ec2-user to public ip address
 ```bash
 ssh -i ec2-user@[master_public_ip]
@@ -82,7 +82,7 @@ umask
   ```
 * Go to AWS dashboard and create image based on this instance
 
-##### Spinning up other machines
+### Spinning up other machines
 * Go into AWS Console and create new instances
   * Same m4.large size as ambari instance
 * Under configure instance Add the following lines "as text":
@@ -93,7 +93,7 @@ sudo mount /dev/xdvb /grid
 ```
 * Once created, add the list of hosts to all machines (/etc/hosts)
 
-##### Install Ambari
+### Install Ambari
 * Connect to the Ambari Machine
 * Install wget
 ```bash
@@ -131,7 +131,7 @@ sudo ambari-server start
   sudo yum install snappy-devel
   ```
 
-##### Create Cluster
+### Create Cluster
 * Connect through browser to ambari at public_url:8080
 * Username: admin Password: admin
 * Name the cluster
@@ -141,11 +141,11 @@ sudo ambari-server start
 * For SHH key, paste in the id_rsa file that was generated
 * User is ec2-user
 
-#### Setting up a DC/OS cluster
+### Setting up a DC/OS cluster
 
 This guide describes how to manually setup a DC/OS cluster on AWS machines.
 
-##### System Requirements
+### System Requirements
 
 Setting up DC/OS requires the following ec2 servers
 * A bootstrap node
@@ -158,12 +158,12 @@ Setting up DC/OS requires the following ec2 servers
   * Agent nodes receive jobs from master nodes.
   * Recommended m3.xlarge instances, but m3.medium and up will suffice.
 
-##### Setting up Servers
+### Setting up Servers
 
 Deploy the servers described above on Amazon EC2 through the GUI or the CLI. All the nodes should
 be deployed in the same availability zone (ex. 2c).
 
-##### Security Group
+### Security Group
 
 For your bootstrap node's security group, set HTTP (80) and SSH (22) ports to available anywhere, and also
 set port 9000 to available anywhere. You will be shutting down the bootstrap node right after the install
@@ -175,11 +175,11 @@ bootstrap node's security group. The image below is what your resulting security
 
 ![alt text](images/security-group.png "security group")
 
-##### Updating Software
+### Updating Software
 
 ssh into each of your master and agent servers, and run `sudo yum update -y`.
 
-##### Configuring DC/OS cluster
+### Configuring DC/OS cluster
 
 ssh into your bootstrap node and download the DC/OS installer.
 
@@ -202,37 +202,37 @@ Specify your deployment settings on the following page.
 
 ![alt text](images/dcos-gui-preflight.png "deployment settings")
 
-##### Settings
+### Settings
 
-###### Master Private IP List
+#### Master Private IP List
 
 Comma separated list of all the private ip's of your masters.
 
-###### Agent private IP List
+#### Agent private IP List
 
 Comma separated list of all the private ip's of your private agents.
 
-###### Agent Public IP List
+#### Agent Public IP List
 
 Comma separated list of all the private ip's of your public agents.
 
-###### Master Public IP
+#### Master Public IP
 
 The public IP for one of your master nodes.
 
-###### SSH username
+#### SSH username
 
 The username when you SSH into any of the nodes in your cluster (eg. ec2-user).
 
-##### SSH Listening Port
+### SSH Listening Port
 
 Should be 22.
 
-##### Private SSH Key
+### Private SSH Key
 
 The SSH key you created when you setup your cluster. Copy and paste the contents of the .pem file into here.
 
-#### Deployment
+### Deployment
 
 Hit run pre-flight, followed by deploy, followed by run post-flight. After the entire setup is complete, you
 will be redirected to login to your DC/OS cluster GUI interface. At this time, you can shutdown the bootstrap
