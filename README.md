@@ -2,8 +2,32 @@
 ## DEVOPS
 ### [Ambari Setup on EC2](https://github.com/ifilonenko/data-analytics#setting-up-apache-ambari-on-ec2)
 ### [DC/OS Setup on EC2](https://github.com/ifilonenko/data-analytics#setting-up-a-dcos-cluster)
-## Setting up Apache Ambari on EC2
+## MANAGING CLUSTER ON AMBARI
+### [Ambari Loadup on EC2](https://github.com/ifilonenko/data-analytics#ambari-loadup-on-ec2)
 
+## Ambari Loadup on EC2
+This is a guide to load up the hadoop ecosystem to begin writing big data applications that interact with HDP
+* Start all nodes: ambariNode1,ambariNode2,ambariHead on ec2
+* Start ambari-server on ambariHead
+```bash
+ssh -i ec2-user@[master_public_ip]
+sudo ambari-server start
+```
+* Go to [master_public_ip]:8080
+* Login into Ambari using our login information
+
+### Starting all services
+* Start services in this order and ensure there are no errors
+  * HDFS (Hadoop file system)
+  * YARN (resource manage)
+  * Hive (HiveSQL for Hadoop)
+  * ZooKeeper (Leader election)
+  * HBase (noSQL key-value store)
+  * Kafka (broker for consumer-producer pipelining)
+  * Spark (in-memory cluster computing)
+  * OTHER appplications are optional and we will look into them further
+
+## Setting up Apache Ambari on EC2
 This guide describes to to manually setup Ambari on EC2 for the purpose of setting up a custom Hadoop environment using HDP (Hortonworks' build packages)
 
 Used this video for walkthrough: [here](https://www.youtube.com/watch?v=6-RY4Ll6ABU)
@@ -140,6 +164,7 @@ sudo ambari-server start
 * For target hosts, copy the privateDNS addresses for all machines
 * For SHH key, paste in the id_rsa file that was generated
 * User is ec2-user
+
 
 ### Setting up a DC/OS cluster
 
