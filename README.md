@@ -1,4 +1,4 @@
-## Table of Contents
+# Table of Contents
 ## DEVOPS
 ### [Ambari Setup on EC2](https://github.com/ifilonenko/data-analytics#setting-up-apache-ambari-on-ec2)
 ### [DC/OS Setup on EC2](https://github.com/ifilonenko/data-analytics#setting-up-a-dcos-cluster)
