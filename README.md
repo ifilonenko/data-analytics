@@ -166,7 +166,7 @@ sudo ambari-server start
 * Connect through browser to ambari at public_url:8080
 * Username: admin Password: admin
 * Name the cluster
-* Select HDP2.4 (HDP version 2.4)
+* Select HDP2.5.3 (HDP version 2.5.3)
   * Under Advanced Options unselect all repos that arent rhel7
 * For target hosts, copy the privateDNS addresses for all machines
 * For SHH key, paste in the id_rsa file that was generated
