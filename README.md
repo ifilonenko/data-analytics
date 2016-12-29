@@ -154,6 +154,13 @@ sudo ambari-server start
   sudo yum remove snappy
   sudo yum install snappy-devel
   ```
+  * On head-node:
+    * Increase NameNode heap-size to 2GB
+    * Follow these directions to get around curl (52) error
+    ```bash
+    sudo -u hdfs hadoop fs -put /usr/hdp/2.5.3.0-37/hadoop/mapreduce.tar.gz /hdp/apps/2.5.3.0-37/mapreduce/
+    sudo cp /usr/hdp/2.5.3.0-37/etc/atlas/conf.dist/client.properties /etc/atlas/conf/
+    ```
 
 ### Create Cluster
 * Connect through browser to ambari at public_url:8080
