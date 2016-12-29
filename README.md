@@ -3,7 +3,7 @@
 ### [Ambari Setup on EC2](https://github.com/ifilonenko/data-analytics#setting-up-apache-ambari-on-ec2)
 ### [DC/OS Setup on EC2](https://github.com/ifilonenko/data-analytics#setting-up-a-dcos-cluster)
 ## MANAGING CLUSTER ON AMBARI
-### [Ambari Loadup on EC2](https://github.com/ifilonenko/data-analytics#ambari-loadup-on-ec2)
+### [Ambari Loadup on EC2](https://github.com/ifilonenko/data-analytics#ambari-loadup-on-ec2-1)
 
 ## Ambari Loadup on EC2
 This is a guide to load up the hadoop ecosystem to begin writing big data applications that interact with HDP
