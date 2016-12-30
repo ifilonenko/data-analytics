@@ -3,6 +3,8 @@ package com.cuappdev.backend
 import org.apache.spark.sql.{SQLContext, _}
 import org.apache.spark.{SparkConf, SparkContext}
 import org.apache.spark.sql.execution.datasources.hbase._
+
+
 object sparkML {
   case class Record(col0: Int, col1: Int, col2: Boolean)
   val catalog =
@@ -20,7 +22,6 @@ object sparkML {
     val sparkConf = new SparkConf().setAppName("HBaseTest")
     val sc = new SparkContext(sparkConf)
     val sqlContext = new SQLContext(sc)
-
     import sqlContext.implicits._
 
     def withCatalog(cat: String): DataFrame = {

@@ -12,6 +12,7 @@
     <scala.compat.version>2.10</scala.compat.version>
     <hbase.version>1.1.1</hbase.version>
     <avro.version>1.7.6</avro.version>
+    <shc.version>1.0.0-1.6-s_2.10</shc.version>
   </properties>
   <dependencies>
     <dependency>
@@ -130,8 +131,8 @@
     </dependency>
     <dependency>
       <groupId>com.hortonworks</groupId>
-      <artifactId>shc-core</artifactId>
-      <version>1.0.1-1.6-s_2.10</version>
+      <artifactId>shc</artifactId>
+      <version>${shc.version}</version>
       <exclusions>
         <exclusion>
           <groupId>org.apache.spark</groupId>
